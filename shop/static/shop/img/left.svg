@@ -1,0 +1,17 @@
+<svg width="12" height="22.5" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" version="1.0">
+ <metadata>Created by potrace 1.16, written by Peter Selinger 2001-2019</metadata>
+
+ <g>
+  <title>Layer 1</title>
+  <!-- Created with SVG Editor - http://github.com/mzalive/SVG Editor/ -->
+  <g stroke="null">
+   <desc stroke="null">Created with Fabric.js 1.7.22</desc>
+
+   <g stroke="null" transform="translate(128 128) scale(0.72 0.72)">
+    <g stroke=" none" fill-rule=" nonzero" fill=" none" stroke-miterlimit="10" stroke-linejoin=" miter" stroke-linecap=" butt" stroke-dasharray=" none" stroke-width="0" transform="translate(-175.05 -175.05) scale(3.89 3.89)">
+     <path stroke=" none" fill-rule=" nonzero" fill=" rgb(0,0,0)" stroke-miterlimit="10" stroke-linejoin=" miter" stroke-dasharray=" none" stroke-linecap=" butt" d="m3.22101,7.17568c0.07686,0 0.15372,-0.02934 0.21231,-0.08793c0.11726,-0.11718 0.11726,-0.30736 0,-0.42454l-3.34767,-3.34775l3.34767,-3.34767c0.11726,-0.11726 0.11726,-0.30736 0,-0.42462c-0.11726,-0.11718 -0.30736,-0.11718 -0.42462,0l-3.55998,3.55998c-0.11726,0.11718 -0.11726,0.30736 0,0.42454l3.55998,3.55998c0.05859,0.05868 0.13545,0.08801 0.21231,0.08801z"/>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

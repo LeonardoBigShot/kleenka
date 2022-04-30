@@ -1,0 +1,28 @@
+{% extends 'C:\Users\user\Desktop\Alle sites\django_shop\shop\templates\delivery.html' %}
+
+{% load static %}
+
+{% block title %}<title>Оплата</title>{% endblock title %}
+
+{% block content %}
+<section class="page-content">
+    <div class="container">
+        <div class="page-content-wrapper">
+            <h1>Оплата</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia nobis tempora deserunt
+                cupiditate cumque quos reiciendis? Saepe harum asperiores hic ex ullam tenetur perferendis
+                molestias eos molestiae facilis, rem beatae.</p>
+
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque ducimus, perspiciatis nulla,
+                placeat dolor sequi eveniet illo rerum nesciunt assumenda saepe doloribus fugiat earum,
+                reprehenderit cum. Voluptate ullam eos animi.</p>
+            <div class="d-flex mt-5">
+                <a href="" class="green_btn me-5"><span>В каталог</span></a>
+                <a href="{% url 'delivery' %}" class="default_btn"><span>О доставке</span> <img
+                        src="{% static 'shop/img/arrow_a.svg' %}" alt=""></a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+{% block swiper_link %}{% endblock swiper_link %}

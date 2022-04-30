@@ -1,0 +1,106 @@
+{% extends 'C:\Users\user\Desktop\Alle sites\django_shop\shop\templates\index.html' %}
+
+{% load static %}
+
+{% block title %}<title>{{ product.name }}</title>{% endblock title %}
+
+{% block content %}
+<section class="card-product">
+    <div class="container">
+        <div class="card-top">
+            <div class="card-img">
+                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'shop/img/no_image.png' %}{% endif %}" alt="">
+            </div>
+            <div class="card-sidebar">
+                <div>
+                    <div class="title">{{ product.name }}</div>
+                </div>
+
+                <div>
+                    <div class="price">
+                        <span>Цена за шт.:</span> <b>{{ product.price }} &#8372;</b>
+                    </div>
+                    {% comment %} <div class="price">
+                        <span>Кол-во штук в упаковке</span> <b> 1 шт.</b>
+                    </div> {% endcomment %}
+                    <div class="price">
+                        <span>Количество (шт.):</span>
+
+                        <form action="{% url "cart:cart_add" product.id %}" method="post">
+                            {{ cart_product_form }}
+
+                        {% comment %} <div class="input_range" data-desc="Ед. изм.: упаковка">
+                            <span class="min button">
+                                <img src="{% static 'shop/img/minus.png' %}" alt="">
+                            </span>
+                            <input type="text" name="qty" id="qty" maxlength="12" />
+                            <span class="plus button">
+                                <img src="{% static 'shop/img/plus.png' %}" alt="">
+                            </span>
+                        </div> {% endcomment %}
+                    </div>
+                </div>
+
+                <div class="pay-bottom">
+                    <div class="to-pay">
+                        <span>Итого к оплате</span>
+                        <b>{{ product.price }} &#8372;</b>
+                    </div>
+                    <div class="pay-block">
+                    {% csrf_token %}
+                        <input class="pay-popup" type="submit" value="Добавить в корзину">
+                    </form>
+                        {% comment %} <button class="pay-popup">Купить</button>
+                        <button class="cart-add"></button> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="card-bottom">
+                <div class="card-info">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="about-tab" data-bs-toggle="tab"
+                                data-bs-target="#product_about" type="button" role="tab" aria-controls="about"
+                                aria-selected="true">О товаре</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="parameters-tab" data-bs-toggle="tab"
+                                data-bs-target="#product_parameters" type="button" role="tab" aria-controls="parameters"
+                                aria-selected="false">Параметры</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="product_about" role="tabpanel"
+                            aria-labelledby="about-tab">
+                            <h2 class="tab">Описание</h2>
+                            <p>{{ product.description }}</p>
+                        </div>
+                        <div class="tab-pane fade" id="product_parameters" role="tabpanel" aria-labelledby="parameters-tab">
+                            <ul class="product_ul">
+                                {% if product.manufacture %}
+                                <li><b>Производитель: </b>{{ product.manufacture }}</li>
+                                {% endif %}
+                                <li><b>Ширина: </b>{{ product.width }}мм</li>
+                                {% if product.thickness %}
+                                <li><b>Толщина: </b>{{ product.thickness }}мм</li>
+                                {% endif %}
+                                {% if product.color %}
+                                <li><b>Цвет: </b>{{ product.color }}</li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block swiper_link %}{% endblock swiper_link %}
+
+<script>
+    {% block swiper_script %}{% endblock swiper_script %}
+</script>

@@ -1,0 +1,330 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'shop/css/style.css/' %}">
+    <link rel="stylesheet" href="{% static 'shop/fonts/fonts.css' %}">
+
+    {% block extra_link %}
+    {% endblock extra_link %}
+
+    {% block title %}<title>Магазин</title>{% endblock title %}
+</head>
+
+<body>
+    <div class="wrapper">
+        {% block header %}
+            <header>
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <div class="container">
+                        <a class="navbar-brand" href="{% url 'index' %} "><img src="{% static 'shop/img/logo.svg' %}" alt=""></a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Каталог
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    {% for category in categories %}
+                                        <li><a class="dropdown-item" href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+                                    {% endfor %}
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{% url 'delivery' %}">Доставка</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'order' %}">Оплата</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'support' %}">Поддержка</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu-right d-flex justify-content-between">
+                            <div class="menu-contact">
+                                <a href="tel:+380996602621">
+                                    <img src="{% static 'shop/img/phone.svg' %}" height="25px" alt="">
+                                    <span>+380 (99) 660 26 21</span>
+                                </a>
+                            </div>
+                            <div class="menu-user">
+                                <a href="{% url 'cart:cart_detail' %}" class="cart">
+                                    <img src="{% static 'shop/img/cart.svg' %}" height="25px" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+        {% endblock header %}
+
+        {% block content %}
+        <section class="home-banner">
+            <div class="container">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide block">
+                            <img src="{% static 'shop/img/ad.jpg' %}" alt="">
+                            <h2>Подарок на первый заказ</h2>
+                            <p>Получите 500 рублей за подписку на рассылку</p>
+                            <a data-bs-toggle="modal" data-bs-target="#subscribe" href="">Подписаться</a>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-menu">
+            <div class="container">
+                <div class="swiper-container-menu">
+                    <div class="swiper-wrapper">
+                        <a href="{% url 'index' %}" class="swiper-slide {% if category.slug == None %}active{% endif %}">
+                            <span>Все</span>
+                        </a>
+                        {% for i in categories %}
+                            <a href="{{ i.get_absolute_url }}" class="swiper-slide {% if category.slug == i.slug %}active{% endif %}">
+                                <span>{{ i.name }}</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-products">
+            <div class="container">
+                {% if category.slug == None %}
+                <h3 class="all_products">Все товары</h3>
+                {% endif %}
+                <div class="products-wrapper">
+                    {% for product in products %}
+                        <div class="product">
+                            <a href="{{ product.get_absolute_url }}" class="title">
+                                <div class="img">
+                                    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'shop/img/no_image.png' %}{% endif %}" alt="">
+                                </div>
+                            </a>
+                            <a href="{{ product.get_absolute_url }}" class="title">{{ product.name }}</a>
+                            <a href="{{ product.get_absolute_url }}" class="title">
+                                <p class="description">{{ product.description }}</p>
+                            </a>
+                            <div class="price">
+                                <b>{{ product.price }} &#8372; / шт. </b> <span>За шт.</span>
+                            </div>
+
+                            <a class="to-cart" href="{{ product.get_absolute_url }}">Просмотр</a>
+                            {% comment %} <form action="{% url 'cart:cart_add' product.id %}" method="post" class="to-cart">
+                                {{ cart_product_form }}
+                                {% csrf_token %}
+                                <input data-product={{ product.id }} data-action="add" type="submit" class="to-cart update-cart" value="В корзину"></input>
+                            </form> {% endcomment %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="pagination-block">
+                {% include "pagination.html" with page=products %}
+                    {% comment %} <nav aria-label="Page navigation example">
+                        {% include 'pagination.html' %}
+
+                        <ul class="pagination">
+                            <li class="page-item active"><a href="" class="page-link">1</a></li>
+                            <li class="page-item"><a href="" class="page-link">2</a></li>
+                            <li class="page-item"><a href="" class="page-link">3</a></li>
+                            <li class="page-item"><a href="" class="page-link">4</a></li>
+                            <li class="page-item"><a href="" class="page-link">•••</a></li>
+                            <li class="page-item"><a href="" class="page-link">8</a></li>
+                            <li class="page-item">
+                                <a href="" class="pagelink" aria-label="Next">
+                                    <img src="{% static 'shop/img/icon-next.svg' %}" alt="">
+                                </a>
+                            </li>
+                        </ul>
+                    </nav> {% endcomment %}
+                </div>
+            </div>
+        </section>
+
+        <section class="home-video">
+            <div class="video1440">
+                <div class="ratio ratio-16x9">
+                    <iframe class="ytvideo" src="" title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <img class="play_yt" src="{% static 'shop/img/play.svg' %}" alt="">
+                </div>
+            </div>
+        </section>
+        {% endblock content %}
+
+        {% block delivery %}
+        <section class="delivery">
+            <div class="container">
+                <div class="block">
+                    <h4 class="title">Бесплатная доставка по Харькову <br>
+                        и Области от 800 &#8372;</h4>
+                    <a href="">Оформить</a>
+                </div>
+            </div>
+        </section>
+        {% endblock delivery %}
+
+        {% block footer %}
+        <footer>
+            <div class="container">
+                <div class="footer-wrapper">
+                    <div class="footer-left">
+                        <div class="phones">
+                            <div class="phone-item">
+                                <span>Звонок по Украине</span>
+                                <a href="tel:+380996602621">+380 (99) 660 26 21</a>
+                            </div>
+                            <div class="phone-item">
+                                <span>Для приёма заказов</span>
+                                <a href="tel:+380996602621">+380 (99) 660 26 21</a>
+                            </div>
+                        </div>
+                        <div class="work-time">
+                            Приём звонков по будням с 9:00 до 19:00
+                        </div>
+                    </div>
+
+                    <div class="footer-center">
+                        <div class="work-email">
+                            <a class="site-help" href="{% url 'support' %}">Поддержка</a>
+                            <a href="mailto: info@gmail.com">Email: info@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <div class="footer-right">
+                        <div class="social">
+                            <a href="https://facebook.com">Мы в facebook ></a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="footer_bottom">
+                    <span>©2021. Клеёнки</span>
+                    <a href="">Условия и соглашения</a>
+                    <a href="">Политика конфиденциальности</a>
+                </div>
+            </div>
+        </footer>
+        {% endblock footer %}
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'shop/js/cart.js' %}" ></script>
+    {% block swiper_link %}
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    {% endblock swiper_link %}
+
+    {% block extra_script %}
+    {% endblock extra_script %}
+
+    <script>
+        {% block jq_script %}
+        jQuery(function () {
+            var j = jQuery;
+
+            var addInput = '#qty';
+
+            var n = 1;
+
+            j(addInput).val(n + 'шт.');
+
+            j('.plus').on('click', function () {
+                j(addInput).val(++n + 'шт.');
+            })
+
+            j('.min').on('click', function () {
+                if (n >= 1) {
+                    j(addInput).val(--n + 'шт.');
+                } else {
+                }
+            });
+
+            $('.play_yt').click(function () {
+                $(this).hide();
+                $('.ytvideo').attr('src', 'https://www.youtube.com/embed/onB8sIPZ4L0?autoplay=1');
+            })
+        });
+        {% endblock jq_script %}
+
+        {% block swiper_script %}
+        var swiper = new Swiper(".swiper-container", {
+            spaceBetween: 150,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+        var swiper2 = new Swiper(".swiper-container-menu", {
+            slidesPerView: 'auto',
+
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+        {% endblock swiper_script %}
+
+        $('.navbar-toggler').on('click', function() {
+            $(this).toggleClass('change-button');
+
+        });
+    </script>
+</body>
+
+</html>
+
+{% block modal %}
+<!-- Modal -->
+<div class="modal fade" id="subscribe" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-body">
+                <div class="top-modal">
+                    <img src="{% static 'shop/img/icon-mail.svg' %}" alt="">
+                    <div class="modal-name">Подпишитесь на нашу рассылку и получите промокод на 100 &#8372;</div>
+                </div>
+                <form action="" method="post">
+                    <div class="inpb">
+                        <input class="mail" name="" type="text" placeholder="E-mail">
+                    </div>
+
+                    <button>Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock modal %}

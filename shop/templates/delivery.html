@@ -1,0 +1,39 @@
+{% extends "C:\Users\user\Desktop\Alle sites\django_shop\shop\templates\index.html" %}
+
+{% load static %}
+
+{% block title %}<title>Доставка</title>{% endblock title %}
+
+{% block content %}
+<section class="page-content">
+    <div class="container">
+        <div class="page-content-wrapper">
+            <h1>Доставка</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia nobis tempora deserunt
+                cupiditate cumque quos reiciendis? Saepe harum asperiores hic ex ullam tenetur perferendis
+                molestias eos molestiae facilis, rem beatae.</p>
+
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque ducimus, perspiciatis nulla,
+                placeat dolor sequi eveniet illo rerum nesciunt assumenda saepe doloribus fugiat earum,
+                reprehenderit cum. Voluptate ullam eos animi.</p>
+            <div class="d-flex mt-5">
+                <a href="" class="green_btn me-5"><span>В каталог</span></a>
+                <a href="{% url 'order' %}" class="default_btn"><span>Об оплате</span> <img
+                        src="{% static 'shop/img/arrow_a.svg' %}" alt=""></a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block delivery %}
+{% endblock delivery %}
+
+{% block swiper_link %}{% endblock swiper_link %}
+
+<script>
+    {% block jq_script %} {% endblock jq_script %}
+    {% block swiper_script %} {% endblock swiper_script %}
+</script>
+
+{% block modal %}{% endblock modal %}
